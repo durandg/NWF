@@ -1,0 +1,33 @@
+##                          ~7I~
+##                      +Z    ZZZz Z
+##                   ZI   ZZZZ, ZZ    +
+##                   Z    ZZZZZZZZ~$ z
+##                  Z    zZZZZZZZz     z
+##                  Z     +ZZZZ7Z
+##                  Z$      ZZ
+##    NNNNNNNNNN   NNNNNNNNNNN NNNNNNNNNNN   NNNNNNNNNN
+##  NNNN          NNNN         NNN      NNN  NNN      NNN
+##  NNN   NNNNNN  NNN   NNNNNN NNN      NNN  NNN      NNN
+##  NNNN     NNN  NNNN     NNN NNN     NNNN  NNN     NNNN
+##   NNNNNNNNNNN   NNNNNNNNNNN NNNNNNNNNNN   NNNNNNNNNNN
+##
+##       C    O    M    P    U     T    I    N    G
+##
+## This software is developed by GGDD Computing. To use it,
+## distribute or modify, you need to have an authorization
+## licence or a written agreement. All right reserved.
+##
+## Copyright (c) GGDD Computing and Guillaume Durand.
+## Visit our website on: http://www.ggddcomputing.com
+
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteEngine on
+
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME}% !-f
+RewriteCond %{REQUEST_FILENAME}% !-d
+RewriteRule ^([^(/\.)]+)-([0-9]+)$ index.php?pid=$1/$2 [QSA,L]
+RewriteRule ^([^(/\.)]+)/([^(/\.)]+)$ index.php?pid=$1/$2 [QSA,L]
+RewriteRule ^([^(/\.)]+)$ index.php?pid=$1 [QSA,L]
