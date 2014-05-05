@@ -12,7 +12,7 @@ NWF::config()->mvc_compiled_folder = './App/Compiled/';
 
 NWF::config()->sql_database = "urbajob";
 NWF::config()->sql_username = "urbajob";
-NWF::config()->sql_password = "JKPe7WGn3crRPYR3";
+NWF::config()->sql_password = "";
 NWF::config()->sql_debug = true;
 NWF::config()->debug_active = true;
 
