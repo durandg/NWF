@@ -100,6 +100,7 @@ define("FRAMEWORK_DEFAULT",      serialize(
       "mvc_cache_footer"      =>    0,
       "mvc_view_folder"       =>    "./view/",
       "mvc_assets_folder"     =>    "./assets/",
+      "mvc_model_folder"      =>    "./model/",
       "mvc_compiled_folder"   =>    "./compiled/",
       "mvc_controller_folder" =>    "./controller/",
       "mvc_preprocess_folder" =>    "./preprocess/",
@@ -194,6 +195,11 @@ class       NWF {
                   return $this->_modules[$moduleProp[MOD_ARRAY_ID]][MOD_OBJECT_IDX];
              }
          }
+      }
+      $models = NWF::stack()->get("__mvc_model");
+      foreach ($models as $key => $value) {
+         if ($value['ModelName'] == $getName)
+            return $value['ModelObject'];
       }
       return null;
    }
@@ -1361,6 +1367,28 @@ class       NWF_MOD_Mvc {
 
    public   function loadController($viewName, $cacheTime = 0) {
       NWF::stack()->set("__mvc_controller[]", array($viewName, $cacheTime));
+   }
+
+   public   function loadModel($modelName) {
+      /* -- TO-DO
+         -- Check if the model is already loaded.
+         -- Check modules names
+      if (NWF::stack()->get("__mvc_model") != null) {
+         NWF::warning("MVC00002", "This model is already loaded.");
+         return false;
+      }*/
+      if (!file_exists(NWF::config()->mvc_model_folder."/".$modelName.".php")) {
+         NWF::warning("MVC00002", "This model does not exists (no file).");
+         return false;
+      }
+      include_once(NWF::config()->mvc_model_folder."/".$modelName.".php");
+      if (!class_exists($modelName)) {
+         NWF::warning("MVC00003", "This model does not exists (no class).");
+         return false;
+      }
+      $model = new $modelName($this);
+      NWF::stack()->set("__mvc_model[]", array('ModelName' => strtolower($modelName), 'ModelObject' => $model));
+      return true;
    }
 
    public   function setPageRights() {

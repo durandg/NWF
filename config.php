@@ -1,6 +1,7 @@
 <?php
 // Folders configuration
 NWF::config()->mvc_view_folder = './App/View/';
+NWF::config()->mvc_model_folder = './App/Models/';
 NWF::config()->mvc_assets_folder = './App/Assets/';
 NWF::config()->mvc_preprocess_folder = './App/Preprocess/';
 NWF::config()->mvc_controller_folder = './App/Controllers/';

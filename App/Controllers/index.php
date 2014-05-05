@@ -16,6 +16,8 @@ class       Controller {
   
    private  function loadControllers() {
      $this->nwf->mvc->loadController("index", 50000);
+     $this->nwf->mvc->loadModel("Test");
+     $this->nwf->test->World();
    }
 
    public   function getViewVars() {
