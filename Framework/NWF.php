@@ -5,7 +5,7 @@
 // Yb, `8dP'     `88  Yb, `88     88     d8'  Yb,_    88      
 //  `"  88'       88   `"  88     88     88    `""    88      
 //      88        88       88     88     88        ggg88gggg  
-//      88        88       88     88     88           88   8  
+//      88        88       88     88     88           88     
 //      88        88       88     88     88           88      
 //      88        88       Y8    ,88,    8P     gg,   88      
 //      88        Y8,       Yb,,d8""8b,,dP       "Yb,,8P      
@@ -291,6 +291,10 @@ class       NWF {
       return new NWFTemplate($filename, $vars, $cacheTime);
    }
 
+   public   function data($table) {
+      return new NWFTemplate($this, $table);
+   }
+
    public   static function member() {
       return new NWFMember(func_get_args());
    }
@@ -493,7 +497,11 @@ class       NWF_Kernel {
             $moduleList[] = array(strtolower($name[2]), $moduleId - 1, $process);
          }
       }
-      define("MOD_ARRAY", serialize($moduleList));    
+      define("MOD_ARRAY", serialize($moduleList));
+      if (isset($_GET['isNWF']) && $_GET['isNWF'] == '42') {
+         echo 'NWF Framework is used by this website.';
+         exit;
+      }    
    }
 }
 
@@ -1600,6 +1608,18 @@ class       NWF_MOD_Member {
 
    public   function getRights() {
       return $this->_rights;
+   }
+}
+
+class       NWFData {
+   private  $_nwf;
+
+   public   function __construct($nwf, $table) {
+      $this->_nwf = $nwf;
+      if (!isset($this->_nwf->sql)) {
+         NWF::warning("DATA00001", "NWF requires MOD_SQL to run");
+         return false;         
+      }
    }
 }
 
